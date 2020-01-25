@@ -10,7 +10,7 @@ before_install:
   - unzip packer_${VER}_linux_amd64.zip
   - sudo mv packer /usr/local/bin
   - packer --version
-  - git clone https://github.com/chef/bento.git
+  - git clone https://github.com/ssmirr/bento.git
   - cd bento/packer_templates/ubuntu
   - packer build -only=virtualbox-iso ubuntu-18.04-amd64.json --headless
 
