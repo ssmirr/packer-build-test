@@ -12,7 +12,7 @@ before_install:
   - packer --version
   - git clone https://github.com/ssmirr/bento.git
   - cd bento/packer_templates/ubuntu
-  - packer build -only=virtualbox-iso ubuntu-18.04-amd64.json --headless
+  - packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
 
 
   # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
