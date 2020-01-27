@@ -12,30 +12,18 @@ before_install:
   - packer --version
   - git clone https://github.com/ssmirr/bento.git
   - cd bento/packer_templates/ubuntu
-  - travis_wait 60 packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
+  - travis_wait 45 packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
 
-
-  # - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  # - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  # - sudo apt-get update
-  # - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
-  # - sudo cat /etc/docker/daemon.json
-  # - sudo rm -f /etc/docker/daemon.json
-  # - sudo systemctl restart docker
-  # - mkdir ~/.baker
-  # - sudo apt-get install bridge-utils mkisofs
-  # - git clone https://github.com/ottomatica/slim.git
-  # - cd slim && npm link
-  # - slim build images/alpine3.8-simple
-  # - slim run micro alpine3.8-simple
-  # - slim vms
-
-  # - npm install -g ssmirr/Baker#dev
-  # - ls
-  # - baker bake
-  # - baker status
-  # - python --version
-  # - baker run python_version
-  # - baker run whoami
-  # - baker delete
-  # - vboxmanage list vms
+before_deploy:
+  # Set up git user name and tag this commit
+  - git config --local user.name "travis"
+  - git config --local user.email "ssmirr@noreply.github.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  api_key:
+    secure: "L1534894g6bbT4/4qGfrA7EXaCJ8+9VszPB2hOsvegXSnNyEeRBbbrGRgXewUJnP7tM7OvhPWWBJaIV9j17K5Yeky4Z36N+6T+NxR9QRlSOYFaoh8YABu38wRSJ0mqy8tEdgO+G1L9hSBRL7bsU/6SWieLmEealNaJayLaUG16+9hXMNa4A/q09Ol2K3yd+V6QtqW4ZLMW8ZzVqhuft5WO+BWZJN6OcX56keylxxj76EpzWw1d8HvBYxgh6LHbVT0WbQ9L3qcWe39GnNLHav2LzdqoyV+pwwkESGukgWnD9xxxLs9J9CEm8p1DtoBIM3EtBUzsqNNbRv06gm8KgHjGwVWhjyIkO/LuHrm2OidXFqAJUWAIqf35y0WMIpKiqOv2umVGXw/JWNWQ/awrD4QJ0YjQUPwA8h/BgmIM6xxpFfR9yVr/BIofUEOL81YsZHQaLZLGx+H127sHSspGESFlTYts7hhvSv/CjJ8OX0aK05CDI4gTa8HI5RRzPdgMdmO3PENBLt1q3bbPFMY5vklX7MprFkaSenaGukGcTf3mnNbJLIp5Mfu/Znm/b3ADFVTgmF5BrHElP4s4vCUDjmx1b71dbKZXuNYteYMs8eoVS4ZzT7lrVM33K2vMSUYXNGf+EBCYWaEvQ4NmBtXXeSVrT7kVGLFqDJGXcgU/Q7ius="
+  file: "../../builds/ubuntu-18.04.virtualbox.box"
+  skip_cleanup: true
+  overwrite: true
