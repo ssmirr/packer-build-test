@@ -14,6 +14,10 @@ before_install:
   - cd bento/packer_templates/ubuntu
   - travis_wait 45 packer build -only=virtualbox-iso ubuntu-18.04-amd64.json
 
+env:
+  global:
+    secure: mFkLkmluJNcXLxBTymrFFFSVYeJbrjWBIRNUQCKvDjRol/4W0LUyTTHHd8YJmm/jte6IkqATXp475EhDEVRoh6txYDPH1cDPp6gzCfhy6Pn2dijZIJ1feYoqJLEhh5RccvItDHf4ZCMErNuPStmdkldBm2t3t/5SsfOPqHXjV0Lm2Zzdcxfmno6rtICJ2pTaEY24CDUm+B8r+uTvrNgk33A4aflxe2Jm5/0pxC4PVVPbRc9+XOy11+uqmO0o4UuVdBYpYZPdJiQ2E7/4w4xmDlqLMA2gRiX3WblMqGmi4BxWObU5PhYRcbTDysc7sPII4CBVa0v7rEddvs1O7ZVnTKf+EXFxWI+737iiDW6UZ2ZSa9flIhJeaP/ygwbMUZJZBX9kP1vPyF9mW6OdDoW/ZA6bQtixdWZEUQexva/3jz9LH5ZLtvfkZb6f1gWnhz+MhAqLTGvxu2+4K7PgAmzgqL4T0rBkpHeIl7sTCFm9rHd5R6iVrkzrcDU/sePkrBiu/GPxwgbE2S2ZM7dv57IlDD5CUMoBbfGw3g80mJdEDHvGEZ5EwvYnxfhpT4ysdEy1DFtpkyxr+9ffbRtt0bGwuQWLcF6+3eC9iBEHYzYxTB4A0UDc425nr5m2iiE7ixzfEz84uoB6R8j47Oyt95DMtyE3C7GIz1iD4I5wb7zwpDc=
+
 before_deploy:
   # Set up git user name and tag this commit
   - git config --local user.name "travis"
@@ -23,7 +27,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: "L1534894g6bbT4/4qGfrA7EXaCJ8+9VszPB2hOsvegXSnNyEeRBbbrGRgXewUJnP7tM7OvhPWWBJaIV9j17K5Yeky4Z36N+6T+NxR9QRlSOYFaoh8YABu38wRSJ0mqy8tEdgO+G1L9hSBRL7bsU/6SWieLmEealNaJayLaUG16+9hXMNa4A/q09Ol2K3yd+V6QtqW4ZLMW8ZzVqhuft5WO+BWZJN6OcX56keylxxj76EpzWw1d8HvBYxgh6LHbVT0WbQ9L3qcWe39GnNLHav2LzdqoyV+pwwkESGukgWnD9xxxLs9J9CEm8p1DtoBIM3EtBUzsqNNbRv06gm8KgHjGwVWhjyIkO/LuHrm2OidXFqAJUWAIqf35y0WMIpKiqOv2umVGXw/JWNWQ/awrD4QJ0YjQUPwA8h/BgmIM6xxpFfR9yVr/BIofUEOL81YsZHQaLZLGx+H127sHSspGESFlTYts7hhvSv/CjJ8OX0aK05CDI4gTa8HI5RRzPdgMdmO3PENBLt1q3bbPFMY5vklX7MprFkaSenaGukGcTf3mnNbJLIp5Mfu/Znm/b3ADFVTgmF5BrHElP4s4vCUDjmx1b71dbKZXuNYteYMs8eoVS4ZzT7lrVM33K2vMSUYXNGf+EBCYWaEvQ4NmBtXXeSVrT7kVGLFqDJGXcgU/Q7ius="
+    secure: "$api_key"
   file: "../../builds/ubuntu-18.04.virtualbox.box"
   skip_cleanup: true
   overwrite: true
